@@ -8,7 +8,7 @@ function App() {
   const addTodo = () => {
     if (todo.trim() !== '') {
       setTodos([...todos, { id: Date.now(), text: todo, status: false }]);
-      setTodo(''); // Clear the input field
+      setTodo(''); 
     }
   };
 
