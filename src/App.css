@@ -4,7 +4,7 @@
 }
 
 body {
-  background-color: #020631;
+  background-color: #8b90ce;
 }
 
 .app {
@@ -85,3 +85,47 @@ h2 {
   font-style: normal;
   color: grey;
 }
+.app {
+  animation: fadeIn 2s ease-in-out;
+}
+
+.animated {
+  animation: fadeIn 2s ease-in-out;
+}
+
+/* Keyframe for fade-in animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Styling for other elements can go here */
+.mainHeading {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.subHeading {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.todos {
+  margin-top: 30px;
+}
+.app h4,
+h5 {
+  color: rgb(31, 0, 18);
+}
+

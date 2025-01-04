@@ -1,14 +1,21 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState('');
+  
+  // Get current date and day
+  const getCurrentDay = () => {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date().toLocaleDateString('en-US', options);
+  };
 
   const addTodo = () => {
     if (todo.trim() !== '') {
       setTodos([...todos, { id: Date.now(), text: todo, status: false }]);
-      setTodo(''); 
+      setTodo(''); // Clear the input field
     }
   };
 
@@ -24,14 +31,25 @@ function App() {
     setTodos(todos.filter((item) => item.id !== id));
   };
 
+  // Dynamic date and day for display
+  const currentDay = getCurrentDay();
+
+  // Animation class for starting animation
+  const [isAnimated, setIsAnimated] = useState(false);
+
+  useEffect(() => {
+    // Trigger animation when the component mounts
+    setIsAnimated(true);
+  }, []);
+
   return (
-    <div className="app">
+    <div className={`app ${isAnimated ? 'animated' : ''}`}>
       <div className="mainHeading">
         <h1>ToDo List</h1>
       </div>
       <div className="subHeading">
         <br />
-        <h2>Whoop, it's Wednesday 🌝 ☕</h2>
+        <h2>{currentDay}</h2>
       </div>
       <div className="input">
         <input
