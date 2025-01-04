@@ -1,10 +1,29 @@
 import './App.css';
-import React from 'react';
+import React, { useState } from 'react';
 
-import { useState } from 'react';
 function App() {
-  const [todos,settodos]= useState([])
-  const [todo,settodo]=useState('')
+  const [todos, setTodos] = useState([]);
+  const [todo, setTodo] = useState('');
+
+  const addTodo = () => {
+    if (todo.trim() !== '') {
+      setTodos([...todos, { id: Date.now(), text: todo, status: false }]);
+      setTodo(''); // Clear the input field
+    }
+  };
+
+  const toggleStatus = (id) => {
+    setTodos(
+      todos.map((item) =>
+        item.id === id ? { ...item, status: !item.status } : item
+      )
+    );
+  };
+
+  const removeTodo = (id) => {
+    setTodos(todos.filter((item) => item.id !== id));
+  };
+
   return (
     <div className="app">
       <div className="mainHeading">
@@ -12,26 +31,43 @@ function App() {
       </div>
       <div className="subHeading">
         <br />
-        <h2>Whoop, it's Wednesday 🌝 ☕ </h2>
+        <h2>Whoop, it's Wednesday 🌝 ☕</h2>
       </div>
       <div className="input">
-        <input value={todo} onChange={(e)=>settodo(e.target.value)} type="text" placeholder="🖊️ Add item..." />
-        <i onClick={()=>settodos([...todos,todo])} className="fas fa-plus"></i>
+        <input
+          value={todo}
+          onChange={(e) => setTodo(e.target.value)}
+          type="text"
+          placeholder="🖊️ Add item..."
+        />
+        <i onClick={addTodo} className="fas fa-plus"></i>
       </div>
       <div className="todos">
-        {
-          todos.map((value)=>{
-
-         return (<div className="todo">
-          <div className="left">
-            <input type="checkbox" name="" id="" />
-            <p>{value}</p>
+        {todos.map((value) => (
+          <div key={value.id} className="todo">
+            <div className="left">
+              <input
+                type="checkbox"
+                checked={value.status}
+                onChange={() => toggleStatus(value.id)}
+              />
+              <p style={{ textDecoration: value.status ? 'line-through' : 'none' }}>
+                {value.text}
+              </p>
+            </div>
+            <div className="right">
+              <i onClick={() => removeTodo(value.id)} className="fas fa-times"></i>
+            </div>
           </div>
-          <div className="right">
-            <i className="fas fa-times"></i>
-          </div>
-        </div>)
-        })}
+        ))}
+        <div className="completed">
+          <h3>Completed Tasks:</h3>
+          {todos
+            .filter((value) => value.status)
+            .map((value) => (
+              <h4 key={value.id}>{value.text}</h4>
+            ))}
+        </div>
       </div>
     </div>
   );
